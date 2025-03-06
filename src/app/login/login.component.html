@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <div class="card mx-auto" style="max-width: 400px;">
+      <div class="card-header text-center">
+        <h3>Login</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              class="form-control" 
+              formControlName="username"
+              placeholder="Enter Username" 
+              autocomplete="off"
+              [ngClass]="{ 'is-invalid': f['username'].invalid && (f['username'].touched || submit) }"
+            />
+            <div *ngIf="f['username'].hasError('required') && (f['username'].touched || submit)">
+              <div class="alert alert-danger">
+                Username is required.
+              </div>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              class="form-control" 
+              formControlName="password"
+              placeholder="Enter Password" 
+              [ngClass]="{ 'is-invalid': f['password'].invalid && (f['password'].touched || submit) }"
+            />
+            <div *ngIf="f['password'].hasError('required') && (f['password'].touched || submit)">
+              <div class="alert alert-danger">
+                Password is required.
+              </div>
+            </div>
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>

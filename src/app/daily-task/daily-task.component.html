@@ -1,0 +1,67 @@
+<div class="m-2 float-end">
+    <button class="btn btn-primary" (click)="Logout()"> Logout</button>
+</div>
+<div class="p-5">
+    <form [formGroup]="taskForm" autocomplete="off">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" formControlName="title" class="form-control" placeholder="Enter task title" />
+            <div *ngIf="f['title'].hasError('required') && (f['title'].touched || submit)">
+                <div class="alert alert-danger">
+                    Title is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class=" form-label">Description</label>
+            <textarea id="description" formControlName="description" class="form-control"
+                placeholder="Enter task description"></textarea>
+            <div *ngIf="f['description'].hasError('required') && (f['description'].touched || submit)">
+                <div class="alert alert-danger">
+                    Description is required.
+                </div>
+            </div>
+        </div>
+
+        <button *ngIf="editIndex === null" type="button" class="btn btn-success" (click)="addTask()"
+            [disabled]="taskForm.invalid">
+            Add Task
+        </button>
+
+        <button *ngIf="editIndex !== null" type="button" class="btn btn-success" (click)="UpdateAndSave()"
+            [disabled]="taskForm.invalid">
+            Update Task
+        </button>
+
+        <button type="button" class="btn btn-danger  ms-2" (click)="cancelEdit()"
+            *ngIf="editIndex !== null">Cancel</button>
+    </form>
+
+    <div class="table-scroll mt-4">
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark sticky-top">
+                <tr>
+                    <th width="5%" scope="col">#</th>
+                    <th width="20%" scope="col">Title</th>
+                    <th width="40%" scope="col">Description</th>
+                    <th width="15%" scope="col">Date</th>
+                    <th width="10%" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of taskList; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.date }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="editTaskRow(task, i)">Edit</button>
+                        <button class="btn btn-danger btn-sm ms-2" (click)="deleteTask(i)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
